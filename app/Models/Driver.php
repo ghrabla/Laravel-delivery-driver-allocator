@@ -18,6 +18,10 @@ class Driver extends Model
     public const LON = 'longitude';
     public const IS_AVAILABLE = 'is_available';
 
+    protected $casts = [
+        Driver::ID => 'string',
+    ];
+
     protected $fillable = [
         self::NAME,
         self::LAT,

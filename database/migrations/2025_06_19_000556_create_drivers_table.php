@@ -15,12 +15,9 @@ return new class extends Migration
         Schema::create(Driver::TABLE, function (Blueprint $table) {
             $table->uuid(Driver::ID)->primary();
             $table->string(Driver::NAME);
-            $table->decimal(Driver::LAT, 10, 7);
-            $table->decimal(Driver::LON, 10, 7);
             $table->boolean(Driver::IS_AVAILABLE)->default(true);
             $table->timestamps();
 
-            $table->index([Driver::LAT, Driver::LON]);
             $table->index(Driver::IS_AVAILABLE);
         });
     }

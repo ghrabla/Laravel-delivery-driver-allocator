@@ -15,8 +15,6 @@ class Driver extends Model
     public const TABLE = 'drivers';
     public const ID = 'id';
     public const NAME = 'name';
-    public const LAT = 'latitude';
-    public const LON = 'longitude';
     public const IS_AVAILABLE = 'is_available';
 
     protected $casts = [
@@ -25,8 +23,6 @@ class Driver extends Model
 
     protected $fillable = [
         self::NAME,
-        self::LAT,
-        self::LON,
         self::IS_AVAILABLE,
     ];
 

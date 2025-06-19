@@ -14,6 +14,6 @@ class DriverRepository
 
     public function assignDriverToRestaurant(Driver $driver, Restaurant $restaurant)
     {
-        return  $driver->restaurants()->attach($restaurant);
+        return  $driver->restaurants()->sync($restaurant);
     }
 }

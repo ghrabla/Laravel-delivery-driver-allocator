@@ -11,20 +11,20 @@ class AssignDriverRequest extends FormRequest
     public function rules(): array
     {
         return [
-            Driver::LAT => 'required|numeric|between:-90,90',
-            Driver::LON => 'required|numeric|between:-180,180',
+            Restaurant::LAT => 'required|numeric|between:-90,90',
+            Restaurant::LON => 'required|numeric|between:-180,180',
             Restaurant::ID => 'required|uuid|exists:' . Restaurant::TABLE . ',' . Restaurant::ID,
         ];
     }
 
     public function latitude(): float
     {
-        return (float) $this->input(Driver::LAT);
+        return (float) $this->input(Restaurant::LAT);
     }
 
     public function longitude(): float
     {
-        return (float) $this->input(Driver::LON);
+        return (float) $this->input(Restaurant::LON);
     }
 
     public function restaurantId(): string

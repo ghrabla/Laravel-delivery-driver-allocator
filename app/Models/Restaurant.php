@@ -6,32 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Driver extends Model
+class Restaurant extends Model
 {
     use HasFactory;
 
-    protected $table = 'drivers';
+    protected $table = 'restaurants';
 
-    public const TABLE = 'drivers';
+    public const TABLE = 'restaurants';
     public const ID = 'id';
     public const NAME = 'name';
     public const LAT = 'latitude';
     public const LON = 'longitude';
-    public const IS_AVAILABLE = 'is_available';
 
     protected $casts = [
-        Driver::ID => 'string',
+        Restaurant::ID => 'string',
     ];
 
     protected $fillable = [
         self::NAME,
         self::LAT,
         self::LON,
-        self::IS_AVAILABLE,
     ];
 
-    public function restaurants(): BelongsToMany
+    public function drivers(): BelongsToMany
     {
-        return $this->belongsToMany(Restaurant::class, 'restaurant_driver');
+        return $this->belongsToMany(Driver::class, 'restaurant_driver');
     }
 }

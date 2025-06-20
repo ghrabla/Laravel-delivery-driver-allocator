@@ -17,8 +17,8 @@ class DispatcherService
     {
         $result = Redis::command('GEORADIUS', [
             'drivers-location',
-            $location->lon,
-            $location->lat,
+            $location->lon(),
+            $location->lat(),
             5,
             'km',
             'WITHDIST',

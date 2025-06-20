@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Driver;
+use App\ValueObjects\Location;
 use Illuminate\Support\Facades\Redis;
 
 class DispatcherService
@@ -10,16 +11,14 @@ class DispatcherService
     public function __construct(
         private LocationService $locationService,
         private DriverService $driverService,
-
     ) {}
 
-
-    public function findClosestDriver(float $lat, float $lon): Driver|null
+    public function findClosestDriver(Location $location): Driver|null
     {
         $result = Redis::command('GEORADIUS', [
             'drivers-location',
-            $lon,
-            $lat,
+            $location->lon,
+            $location->lat,
             5,
             'km',
             'WITHDIST',

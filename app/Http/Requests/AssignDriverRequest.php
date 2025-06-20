@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Driver;
 use App\Models\Restaurant;
 use Illuminate\Foundation\Http\FormRequest;
 

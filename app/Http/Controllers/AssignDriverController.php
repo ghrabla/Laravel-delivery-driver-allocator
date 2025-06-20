@@ -7,6 +7,7 @@ use App\Services\DriverService;
 use App\Http\Requests\AssignDriverRequest;
 use App\Models\Restaurant;
 use App\Services\DispatcherService;
+use App\Services\LocationService;
 use App\Services\RestaurantService;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -17,7 +18,8 @@ class AssignDriverController extends Controller
     public function __construct(
         private DriverService $driverService,
         private RestaurantService $restaurantService,
-        private DispatcherService $dispatcherService
+        private DispatcherService $dispatcherService,
+        private LocationService $locationService
     ) {}
 
     public function __invoke(AssignDriverRequest $request): JsonResponse
@@ -27,10 +29,12 @@ class AssignDriverController extends Controller
                 $request->restaurantId()
             );
 
-            $driver = $this->dispatcherService->findClosestDriver(
+            $location = $this->locationService->create(
                 $request->latitude(),
                 $request->longitude()
             );
+
+            $driver = $this->dispatcherService->findClosestDriver($location);
 
             if (!$driver instanceof Driver) {
                 return response()->json([

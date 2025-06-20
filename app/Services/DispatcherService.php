@@ -50,7 +50,7 @@ class DispatcherService
         }
 
         $this->driverService->assignDriver($driver, $restaurant);
-        $this->removeDriver($driver[Driver::ID]);
+        $this->removeDriver($driver->id);
         return $driver;
     }
 }

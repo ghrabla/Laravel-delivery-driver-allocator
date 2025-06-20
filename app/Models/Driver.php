@@ -22,6 +22,7 @@ class Driver extends Model
     ];
 
     protected $fillable = [
+        self::ID,
         self::NAME,
         self::IS_AVAILABLE,
     ];

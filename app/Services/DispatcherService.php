@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Driver;
+use App\Models\Restaurant;
 use App\ValueObjects\Location;
 use Illuminate\Support\Facades\Redis;
 
@@ -13,7 +14,7 @@ class DispatcherService
         private DriverService $driverService,
     ) {}
 
-    public function findClosestDriver(Location $location): Driver|null
+    private function findClosestDriver(Location $location): Driver|null
     {
         $result = Redis::command('GEORADIUS', [
             'drivers-location',
@@ -34,5 +35,22 @@ class DispatcherService
         $driverId = str_replace('driver:', '', $result[0][0]);
 
         return $this->driverService->findById($driverId);
+    }
+
+    private function removeDriver(string $driverId): void
+    {
+        Redis::command('ZREM', ['drivers-location', 'driver:' . $driverId]);
+    }
+
+    public function assignToDriver(Restaurant $restaurant, Location $location): Driver|null
+    {
+        $driver = $this->findClosestDriver($location);
+        if (!$driver instanceof Driver) {
+            return null;
+        }
+
+        $this->driverService->assignDriver($driver, $restaurant);
+        $this->removeDriver($driver[Driver::ID]);
+        return $driver;
     }
 }

@@ -25,27 +25,15 @@ class AssignDriverController extends Controller
     public function __invoke(AssignDriverRequest $request): JsonResponse
     {
         try {
-            $restaurant = $this->restaurantService->findById(
-                $request->restaurantId()
-            );
+            $restaurant = $this->restaurantService->findById($request->restaurantId());
+            $location = $this->locationService->create($request->latitude(), $request->longitude());
 
-            $location = $this->locationService->create(
-                $request->latitude(),
-                $request->longitude()
-            );
-
-            $driver = $this->dispatcherService->findClosestDriver($location);
-
+            $driver = $this->dispatcherService->assignToDriver($restaurant, $location);
             if (!$driver instanceof Driver) {
                 return response()->json([
                     'message' => 'No available drivers',
                 ], 404);
             }
-
-            $this->driverService->assignDriver(
-                $driver,
-                $restaurant
-            );
 
             Log::info('Driver assigned successfully', [
                 Driver::ID => $driver[Driver::ID],

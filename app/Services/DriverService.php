@@ -19,9 +19,8 @@ class DriverService
         return $this->driverRepository->findById($id);
     }
 
-    public function assignDriver(Driver $driver, Restaurant $restaurant): Driver
+    public function assignDriver(Driver $driver, Restaurant $restaurant)
     {
-        $this->driverRepository->assignDriverToRestaurant($driver, $restaurant);
-        return $driver;
+        return $this->driverRepository->assignDriverToRestaurant($driver, $restaurant);
     }
 }

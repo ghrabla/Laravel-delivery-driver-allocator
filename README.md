@@ -22,7 +22,7 @@ Follow the instructions below to set up and run the project on your local enviro
 1. **Clone the repository**
 
     git clone https://github.com/ghrabla/Laravel-delivery-driver-allocator.git
-    cd https://github.com/ghrabla/Laravel-delivery-driver-allocator.git
+    cd Laravel-delivery-driver-allocator
 
 2. **Install PHP dependencies**
 

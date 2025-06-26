@@ -12,7 +12,7 @@ class AssignDriverRequest extends FormRequest
         return [
             Restaurant::LAT => 'required|numeric|between:-90,90',
             Restaurant::LON => 'required|numeric|between:-180,180',
-            Restaurant::ID => 'required|uuid|exists:' . Restaurant::TABLE . ',' . Restaurant::ID,
+            Restaurant::ID => 'required|uuid',
         ];
     }
 

@@ -6,9 +6,8 @@ use App\Models\Driver;
 use App\Services\DriverService;
 use App\Http\Requests\AssignDriverRequest;
 use App\Models\Restaurant;
-use App\Services\DispatcherService;
-use App\Services\LocationService;
 use App\Services\RestaurantService;
+use App\DTOs\LocationDTO;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -18,17 +17,20 @@ class AssignDriverController extends Controller
     public function __construct(
         private DriverService $driverService,
         private RestaurantService $restaurantService,
-        private DispatcherService $dispatcherService,
-        private LocationService $locationService
     ) {}
 
     public function __invoke(AssignDriverRequest $request): JsonResponse
     {
         try {
             $restaurant = $this->restaurantService->findById($request->restaurantId());
-            $location = $this->locationService->create($request->latitude(), $request->longitude());
+            if (!$restaurant instanceof Restaurant) {
+                return response()->json([
+                    'message' => 'Restaurant not found',
+                ], 404);
+            }
 
-            $driver = $this->dispatcherService->assignToDriver($restaurant, $location);
+            $location = new LocationDTO($request->latitude(), $request->longitude());
+            $driver = $this->driverService->assignClosestDriver($restaurant, $location);
             if (!$driver instanceof Driver) {
                 return response()->json([
                     'message' => 'No available drivers',

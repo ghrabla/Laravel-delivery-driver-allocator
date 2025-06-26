@@ -11,9 +11,4 @@ class DriverRepository
     {
         return Driver::query()->find($id);
     }
-
-    public function assignDriverToRestaurant(Driver $driver, Restaurant $restaurant)
-    {
-        return  $driver->restaurants()->sync($restaurant);
-    }
 }

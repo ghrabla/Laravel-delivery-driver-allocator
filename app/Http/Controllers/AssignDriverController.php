@@ -24,17 +24,13 @@ class AssignDriverController extends Controller
         try {
             $restaurant = $this->restaurantService->findById($request->restaurantId());
             if (!$restaurant instanceof Restaurant) {
-                return response()->json([
-                    'message' => 'Restaurant not found',
-                ], 404);
+                return $this->failedResponse('Restaurant not found', 404);
             }
 
             $location = new LocationDTO($request->latitude(), $request->longitude());
             $driver = $this->driverService->assignClosestDriver($restaurant, $location);
             if (!$driver instanceof Driver) {
-                return response()->json([
-                    'message' => 'No available drivers',
-                ], 404);
+                return $this->failedResponse('No available drivers', 404);
             }
 
             Log::info('Driver assigned successfully', [
@@ -42,20 +38,14 @@ class AssignDriverController extends Controller
                 Restaurant::ID => $restaurant[Restaurant::ID],
             ]);
 
-            return response()->json([
-                'message' => 'Driver assigned successfully',
-                'data' => $driver
-            ], 200);
+            return $this->successResponse('Driver assigned successfully', $driver);
         } catch (Exception $e) {
             Log::error('Error assigning driver', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
 
-            return response()->json([
-                'message' => 'An error occurred while assigning a driver.',
-                'error' => $e->getMessage()
-            ], 500);
+            return $this->failedResponse('An error occurred while assigning a driver.', 500, $e->getMessage());
         }
     }
 }

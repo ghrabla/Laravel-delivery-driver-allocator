@@ -44,6 +44,6 @@ Follow the instructions below to set up and run the project on your local enviro
 
     php artisan serve
 
-7. **Run Tests (DispatcherServiceTest)**
+7. **Run Tests (DriverServiceTest)**
 
-    php artisan test --filter=DispatcherServiceTest
+    php artisan test --filter=DriverServiceTest

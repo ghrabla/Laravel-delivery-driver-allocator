@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RestaurantDriver extends Model
 {
+    use HasUuids;
+
     protected $table = 'restaurant_driver';
 
     public const TABLE = 'restaurant_driver';
@@ -20,7 +23,6 @@ class RestaurantDriver extends Model
         self::DRIVER_ID,
     ];
 
-    public $incrementing = false;
     protected $keyType = 'string';
 
     public function restaurant(): BelongsTo

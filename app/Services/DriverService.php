@@ -46,7 +46,6 @@ class DriverService
         }
 
         $this->restaurantDriverService->create([
-            RestaurantDriver::ID => (string) Str::uuid(),
             RestaurantDriver::RESTAURANT_ID => $restaurant[Restaurant::ID],
             RestaurantDriver::DRIVER_ID => $driver[Driver::ID],
         ]);

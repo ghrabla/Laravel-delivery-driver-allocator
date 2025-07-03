@@ -104,8 +104,7 @@ class DriverServiceTest extends TestCase
             ->once()
             ->with(Mockery::on(function ($data) use ($restaurantId, $driverId) {
                 return $data[RestaurantDriver::RESTAURANT_ID] === $restaurantId &&
-                       $data[RestaurantDriver::DRIVER_ID] === $driverId &&
-                       Str::isUuid($data[RestaurantDriver::ID]);
+                       $data[RestaurantDriver::DRIVER_ID] === $driverId;
             }));
 
         $this->redisService

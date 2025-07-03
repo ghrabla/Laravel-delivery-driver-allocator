@@ -10,11 +10,11 @@ use App\Services\RestaurantService;
 use App\DTOs\LocationDTO;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
-
+use Illuminate\Log\LogManager;
 class AssignDriverController extends Controller
 {
     public function __construct(
+        private LogManager $logManager,
         private DriverService $driverService,
         private RestaurantService $restaurantService,
     ) {}
@@ -33,14 +33,14 @@ class AssignDriverController extends Controller
                 return $this->failedResponse('No available drivers', 404);
             }
 
-            Log::info('Driver assigned successfully', [
+            $this->logManager->info('Driver assigned successfully', [
                 Driver::ID => $driver[Driver::ID],
                 Restaurant::ID => $restaurant[Restaurant::ID],
             ]);
 
             return $this->successResponse('Driver assigned successfully', $driver);
         } catch (Exception $e) {
-            Log::error('Error assigning driver', [
+            $this->logManager->error('Error assigning driver', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);

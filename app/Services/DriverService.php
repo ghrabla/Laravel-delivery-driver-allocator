@@ -8,7 +8,6 @@ use App\Models\RestaurantDriver;
 use App\Repositories\DriverRepository;
 use App\DTOs\LocationDTO;
 use App\Services\RedisService;
-use Illuminate\Support\Str;
 
 class DriverService
 {
